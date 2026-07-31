@@ -154,30 +154,10 @@ JWT_SECRET=your_secret_jwt_key
 GEMINI_API_KEY=your_google_gemini_api_key
 ```
 
-### 4. Running Locally
-Start both backend API and frontend Vite dev server concurrently:
-```bash
-npm run dev
-```
-- **Frontend App**: `http://localhost:5173`
-- **Backend API**: `http://localhost:5000/api`
 
 ---
 
-## 🚀 Deployment Instructions
 
-### Deploy Frontend to Vercel
-1. Connect your GitHub repository to Vercel.
-2. Select the `client` directory as the Root Directory.
-3. Vercel will automatically use `vercel.json` for routing.
-
-### Deploy Backend to Render
-1. Create a Web Service on Render pointing to your repository.
-2. Set Build Command to: `cd server && npm install`
-3. Set Start Command to: `cd server && node index.js`
-4. Add environment variables (`MONGODB_URI`, `JWT_SECRET`, `GEMINI_API_KEY`).
-
----
 
 ## 📄 License
 MIT © 2026 SwipeHire Team. "Swipe Right on Your Dream Career."
