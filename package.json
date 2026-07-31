@@ -1,0 +1,32 @@
+{
+  "name": "swipehire-root",
+  "version": "1.0.0",
+  "description": "SwipeHire - AI-Powered Job & Internship Matching Platform",
+  "main": "server/index.js",
+  "scripts": {
+    "setup": "npm install && npm install --prefix client && npm install --prefix server",
+    "start": "node server/index.js",
+    "server": "npm start --prefix server",
+    "client": "npm run dev --prefix client",
+    "dev": "npx concurrently \"npm run server\" \"npm run client\"",
+    "seed": "npm run seed --prefix server",
+    "build": "npm run build --prefix client"
+  },
+  "keywords": [
+    "job-matching",
+    "tinder-for-jobs",
+    "ai",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb",
+    "socket.io",
+    "framer-motion",
+    "tailwind"
+  ],
+  "author": "SwipeHire Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
