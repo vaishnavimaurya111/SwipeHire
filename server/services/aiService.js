@@ -16,6 +16,7 @@ if (apiKey && apiKey !== 'your_google_gemini_api_key_here') {
  */
 async function analyzeResume(resumeText, targetRole) {
   if (aiClient) {
+    try {
       const model = aiClient.getGenerativeModel({ model: 'gemini-1.5-flash' });
       const response = await model.generateContent(
         `Analyze the following software developer resume for the target position: "${targetRole}".

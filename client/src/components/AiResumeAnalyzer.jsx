@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { Sparkles, FileText, CheckCircle2, AlertTriangle, Key, RefreshCw, Upload } from 'lucide-react';
 
 export const AiResumeAnalyzer = () => {
-  const [resumeText, setResumeText] = useState(
-    `Alex Chen | Full-Stack Software Engineer
-Stanford CS Senior. Proficient in React, Node.js, TypeScript, Tailwind CSS, Python, MongoDB. Built 4 real-time Web & AI applications.`
-  );
+  const [resumeFile, setResumeFile] = useState(null);
   const [targetRole, setTargetRole] = useState('Full-Stack Software Engineer');
   const [analyzing, setAnalyzing] = useState(false);
   const [result, setResult] = useState({
@@ -26,12 +23,20 @@ Stanford CS Senior. Proficient in React, Node.js, TypeScript, Tailwind CSS, Pyth
   });
 
   const handleRunAnalysis = async () => {
+    if (!resumeFile) {
+      alert("Please upload a PDF resume first!");
+      return;
+    }
+    
     setAnalyzing(true);
     try {
-      const res = await fetch('/api/ai/score-resume', {
+      const formData = new FormData();
+      formData.append('resume', resumeFile);
+      formData.append('targetRole', targetRole);
+
+      const res = await fetch('/api/ai/score-resume-upload', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ resumeText, targetRole }),
+        body: formData,
       });
       const data = await res.json();
       if (data.success && data.analysis) {
@@ -79,14 +84,27 @@ Stanford CS Senior. Proficient in React, Node.js, TypeScript, Tailwind CSS, Pyth
 
           <div>
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 block">
-              Resume Text or Highlights
+              Upload Resume (PDF)
             </label>
-            <textarea
-              rows={6}
-              value={resumeText}
-              onChange={(e) => setResumeText(e.target.value)}
-              className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-xs text-slate-200 focus:outline-none focus:border-pink-500 leading-relaxed"
-            />
+            <div className="relative group w-full h-32 rounded-2xl bg-white/5 border-2 border-dashed border-white/20 hover:border-pink-500/50 hover:bg-white/10 transition-all flex flex-col items-center justify-center cursor-pointer overflow-hidden">
+              <input 
+                type="file" 
+                accept="application/pdf"
+                onChange={(e) => setResumeFile(e.target.files[0])}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              />
+              {resumeFile ? (
+                <div className="flex flex-col items-center gap-2">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+                  <span className="text-sm font-semibold text-emerald-300 px-4 text-center truncate w-full">{resumeFile.name}</span>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center gap-2 text-slate-400 group-hover:text-pink-300 transition-colors">
+                  <Upload className="w-8 h-8" />
+                  <span className="text-sm font-semibold">Click or drag PDF to upload</span>
+                </div>
+              )}
+            </div>
           </div>
 
           <button

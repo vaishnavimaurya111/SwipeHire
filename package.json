@@ -6,7 +6,7 @@
   "scripts": {
     "setup": "npm install && npm install --prefix client && npm install --prefix server",
     "start": "node server/index.js",
-    "server": "npm start --prefix server",
+    "server": "npm run dev --prefix server",
     "client": "npm run dev --prefix client",
     "dev": "npx concurrently \"npm run server\" \"npm run client\"",
     "seed": "npm run seed --prefix server",
@@ -28,5 +28,8 @@
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "mongodb": "^7.5.0"
   }
 }

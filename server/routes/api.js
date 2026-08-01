@@ -1,5 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+});
 
 const authController = require('../controllers/authController');
 const jobController = require('../controllers/jobController');
@@ -49,6 +55,7 @@ router.get('/matches', authMiddleware, swipeController.getMatches);
 // AI FEATURES ROUTES
 // -----------------------------------------------------------
 router.post('/ai/score-resume', aiController.scoreResume);
+router.post('/ai/score-resume-upload', upload.single('resume'), aiController.scoreResumeUpload);
 router.post('/ai/cover-letter', aiController.createCoverLetter);
 router.post('/ai/job-fit', aiController.getJobFit);
 

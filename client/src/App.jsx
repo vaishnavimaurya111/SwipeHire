@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SplashScreen } from './components/SplashScreen';
 import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
 import { MatchModal } from './components/MatchModal';
 import { AiCoverLetterModal } from './components/AiCoverLetterModal';
 import { SkillGapModal } from './components/SkillGapModal';
@@ -133,9 +134,7 @@ export function App() {
             )}
           </main>
 
-          <footer className="w-full py-5 border-t border-white/[0.06] text-center text-xs text-slate-600">
-            SwipeHire – AI-Powered Job & Internship Matching Platform © 2026
-          </footer>
+          <Footer />
 
           {/* Modals */}
           {activeMatch && (
