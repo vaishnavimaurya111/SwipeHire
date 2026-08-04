@@ -7,8 +7,8 @@ const connectDB = async () => {
     return false;
   }
   try {
-    const conn = await mongoose.connect(connUri);
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    const conn = await mongoose.connect(connUri, { dbName: 'swipehire' });
+    console.log(`✅ MongoDB Connected: ${conn.connection.host} (Database: ${conn.connection.db.databaseName})`);
     return true;
   } catch (error) {
     console.error(`❌ MongoDB Connection Error: ${error.message}`);
