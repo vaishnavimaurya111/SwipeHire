@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const dns = require('dns');
 
 const connectDB = async () => {
   const connUri = process.env.MONGODB_URI;
@@ -7,6 +8,7 @@ const connectDB = async () => {
     return false;
   }
   try {
+    try { dns.setServers(['8.8.8.8', '1.1.1.1']); } catch (e) {}
     const conn = await mongoose.connect(connUri, { dbName: 'swipehire' });
     console.log(`✅ MongoDB Connected: ${conn.connection.host} (Database: ${conn.connection.db.databaseName})`);
     return true;
@@ -16,5 +18,6 @@ const connectDB = async () => {
     return false;
   }
 };
+
 
 module.exports = connectDB;
