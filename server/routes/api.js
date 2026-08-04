@@ -70,4 +70,10 @@ router.post('/chats/:matchId/messages', authMiddleware, chatController.sendMessa
 // -----------------------------------------------------------
 router.get('/analytics', authMiddleware, analyticsController.getAnalytics);
 
+// -----------------------------------------------------------
+// JOB APPLICATION ROUTES
+// -----------------------------------------------------------
+router.post('/apply', authMiddleware, jobController.applyToJob);
+router.get('/my-applications', authMiddleware, jobController.getMyApplications);
+
 module.exports = router;

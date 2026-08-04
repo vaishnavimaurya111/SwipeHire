@@ -21,6 +21,7 @@ export const SwipeDeck = ({ onTriggerMatch, onOpenFit, onOpenCoverLetter }) => {
   const [feedItems, setFeedItems] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [appliedJobIds, setAppliedJobIds] = useState(new Set()); // tracks applied jobs
 
   // Filters State
   const [locationFilter, setLocationFilter] = useState('All');
@@ -32,6 +33,7 @@ export const SwipeDeck = ({ onTriggerMatch, onOpenFit, onOpenCoverLetter }) => {
 
   useEffect(() => {
     fetchFeed();
+    if (user?.role !== 'recruiter') fetchMyApplications();
   }, [user?.role]);
 
   const fetchFeed = async () => {
@@ -47,6 +49,25 @@ export const SwipeDeck = ({ onTriggerMatch, onOpenFit, onOpenCoverLetter }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchMyApplications = async () => {
+    try {
+      const token = localStorage.getItem('swipehire_token');
+      const res = await fetch('/api/my-applications', {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      const data = await res.json();
+      if (data.success && data.appliedJobIds) {
+        setAppliedJobIds(new Set(data.appliedJobIds));
+      }
+    } catch (e) {
+      // Not critical — page still works without it
+    }
+  };
+
+  const handleApply = (jobId) => {
+    setAppliedJobIds((prev) => new Set([...prev, jobId]));
   };
 
   const handleSwipeAction = async (action, item) => {
@@ -195,6 +216,8 @@ export const SwipeDeck = ({ onTriggerMatch, onOpenFit, onOpenCoverLetter }) => {
               onSwipe={handleSwipeAction}
               onOpenFit={onOpenFit}
               onOpenCoverLetter={onOpenCoverLetter}
+              isApplied={appliedJobIds.has(String(currentCard._id))}
+              onApply={handleApply}
             />
           </>
         ) : (

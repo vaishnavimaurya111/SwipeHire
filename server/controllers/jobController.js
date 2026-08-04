@@ -238,5 +238,58 @@ exports.getJobById = async (req, res) => {
   }
 };
 
+
 module.exports.SAMPLE_JOBS = SAMPLE_JOBS;
 module.exports.SAMPLE_CANDIDATES = SAMPLE_CANDIDATES;
+
+// Apply to a Job (Student only)
+const Application = require('../models/Application');
+
+exports.applyToJob = async (req, res) => {
+  try {
+    const { jobId, jobSnapshot } = req.body;
+    if (!jobId) return res.status(400).json({ success: false, message: 'jobId is required' });
+
+    const studentId = req.user ? req.user.id : 'usr_student_demo_123';
+
+    // Check for duplicate before inserting
+    let existing = null;
+    try {
+      existing = await Application.findOne({ student: studentId, jobId });
+    } catch (e) {}
+
+    if (existing) {
+      return res.status(409).json({ success: false, message: 'You have already applied to this job', alreadyApplied: true });
+    }
+
+    try {
+      await Application.create({ student: studentId, jobId, jobSnapshot: jobSnapshot || {} });
+    } catch (e) {
+      // Catch unique index violation (race condition)
+      if (e.code === 11000) {
+        return res.status(409).json({ success: false, message: 'You have already applied to this job', alreadyApplied: true });
+      }
+      // If DB not connected, just return success for demo
+    }
+
+    res.status(201).json({ success: true, message: 'Application submitted successfully!', jobId });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// Get all Job IDs the current student has applied to
+exports.getMyApplications = async (req, res) => {
+  try {
+    const studentId = req.user ? req.user.id : 'usr_student_demo_123';
+
+    let applications = [];
+    try {
+      applications = await Application.find({ student: studentId }).select('jobId jobSnapshot status createdAt');
+    } catch (e) {}
+
+    res.json({ success: true, applications, appliedJobIds: applications.map((a) => a.jobId) });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
