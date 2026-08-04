@@ -1,163 +1,228 @@
-# ⚡ SwipeHire – AI-Powered Job & Internship Matching Platform
+# 🚀 SwipeHire – AI-Powered Job & Internship Matching Platform
 
-> **Tagline**: *"Swipe Right on Your Dream Career."*
+<p align="center">
+  <strong>Swipe Right on Your Dream Career.</strong>
+</p>
 
-SwipeHire is a full-stack, Tinder-style job and candidate matching web application built with **React, Node.js, Express, MongoDB, Socket.io, Framer Motion, Tailwind CSS, and Google Gemini AI**. 
-
-It transforms traditional candidate recruitment into an engaging, interactive card-swiping experience with real physics, automated AI resume scoring, skill-gap analysis, real-time messaging, and interactive analytics.
-
----
-
-## 🎬 Features Overview
-
-### 1. 🌟 Opening Splash Animation (<SplashScreen />)
-- Full-screen opening splash screen with brand gradient (`#0c081e` → `#1a0f35` → `#2c0e29`).
-- **Card-Stack Flying Entrance**: Interactive card graphic snaps into place with a subtle pulsing heartbeat.
-- **Letter-by-Letter Entrance**: "SwipeHire" text animates onto the screen with staggered spring physics.
-- **Tagline Fade-In**: *"Swipe Right on Your Dream Career."* fades in smoothly underneath.
-- 2–3 second duration before seamlessly transitioning into the main application.
-
-### 2. 🔥 Swipe Deck & Card Physics (Main USP)
-- Real drag-and-release physics powered by `Framer Motion` (`useMotionValue`, `useTransform`).
-- **Interactive Tilting**: Card tilts dynamically based on drag direction and speed.
-- **Color-Coded Overlays**:
-  - 🟢 **Green Overlay**: Interested (Swipe Right)
-  - 🔴 **Red Overlay**: Skip (Swipe Left)
-  - 🔵 **Blue Overlay**: Super Like (Swipe Up)
-  - 🟡 **Yellow Overlay**: Save for Later (Swipe Down)
-- Micro-animations on floating action buttons (X, Save, Superlike, Like).
-- Filter Drawer for Location, Remote/Hybrid workplace, Tech Stack, and Salary.
-
-### 3. 🎉 Match Celebration System
-- Mutual right swipes trigger an animated **"It's a Match 🎉"** modal.
-- Celebratory **Canvas Confetti** explosion.
-- Dual avatar profile display with quick action to open a direct messaging channel.
-
-### 4. 🤖 AI Powered Features (Gemini 2.5 Flash API)
-- **AI Resume Score & Feedback**: Rates resumes out of 100 with actionable strengths, weaknesses, and missing industry keywords.
-- **AI Cover Letter Generator**: Generates 1-click tailored cover letters specific to candidate profiles and job posts.
-- **AI Job Fit & Skill Gap Analysis**: Calculates compatibility percentage and recommends learning courses to bridge missing skill gaps.
-
-### 5. 💬 Real-Time Messaging & Chat
-- Socket.io live WebSocket chat engine with HTTP REST API fallback.
-- Send messages, view attachment previews, and schedule interviews with calendar invite widgets.
-- Real-time notification toasts for new matches and interview requests.
-
-### 6. 📊 Analytics & Performance Dashboard
-- **Animated Stat Counters**: Count-up numbers for applications sent, total matches, conversion rates, and profile views.
-- **Recharts Data Visualization**: Interactive weekly activity graphs and hiring conversion funnels.
-
-### 7. 👤 Dual Role Management (Student vs Recruiter)
-- **Student Role**: Swipe on job openings, track applications, analyze resume, generate cover letters.
-- **Recruiter Role**: Post new job openings, swipe on student profiles, manage applicant funnel, schedule interviews.
-- **1-Click Demo Logins**: Instant role switcher to test both Student and Recruiter views seamlessly.
+<p align="center">
+An AI-powered recruitment platform that transforms traditional job searching into a Tinder-style swipe experience. SwipeHire intelligently matches students with recruiters using AI resume analysis, skill-gap detection, and real-time communication.
+</p>
 
 ---
 
-## 🛠️ Project Tech Stack
+## 🌐 Live Demo
 
-- **Frontend**: React 18, Vite, Tailwind CSS v3, Framer Motion, Lucide Icons, Canvas Confetti, Recharts, Socket.io-client.
-- **Backend**: Node.js, Express.js, MongoDB (Mongoose), Socket.io, JWT, bcryptjs, @google/genai, Multer.
-- **Deployment Ready**: `vercel.json` (Frontend), `render.yaml` (Backend), MongoDB Atlas.
+🔗 **https://swipe-hire-amber.vercel.app/**
 
 ---
 
-## 📁 Repository Structure
+## ✨ Overview
+
+SwipeHire is a full-stack MERN application that combines AI-powered recruitment with an engaging swipe-based interface.
+
+Instead of browsing endless job listings, students discover opportunities through interactive swipe cards while recruiters swipe through candidate profiles. Once both sides express interest, they instantly match and can begin real-time conversations.
+
+The platform also integrates Google Gemini AI to analyze resumes, calculate ATS scores, identify missing skills, recommend improvements, generate personalized cover letters, and estimate job-fit percentages.
+
+---
+
+# 🎯 Key Features
+
+### ❤️ Tinder-Style Job Matching
+
+* Swipe Right → Interested
+* Swipe Left → Skip
+* Swipe Up → Super Like
+* Swipe Down → Save for Later
+* Smooth card physics with Framer Motion
+
+---
+
+### 👨‍🎓 Student Dashboard
+
+* Browse internships & jobs
+* Resume upload
+* AI ATS Score
+* AI Resume Feedback
+* Cover Letter Generator
+* Skill Gap Analysis
+* Track applications
+* Real-time messaging
+
+---
+
+### 🏢 Recruiter Dashboard
+
+* Post jobs
+* Manage applicants
+* Swipe candidate profiles
+* Schedule interviews
+* Track hiring funnel
+* View analytics
+
+---
+
+### 🤖 AI Features
+
+Powered by **Google Gemini API**
+
+* AI Resume Analysis
+* ATS Score Generation
+* Resume Improvement Suggestions
+* Missing Skills Detection
+* Industry Keyword Analysis
+* AI Cover Letter Generator
+* Job Fit Prediction
+* Personalized Learning Recommendations
+
+---
+
+### 💬 Real-Time Chat
+
+* Socket.io messaging
+* Online/Offline status
+* Typing indicators
+* File sharing
+* Interview scheduling
+* Instant notifications
+
+---
+
+### 📊 Analytics Dashboard
+
+* Application statistics
+* Match conversion rate
+* Hiring funnel
+* Weekly activity charts
+* Recruiter performance insights
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React 18
+* Vite
+* Tailwind CSS
+* Framer Motion
+* Recharts
+* Socket.io Client
+* Lucide Icons
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB Atlas
+* Mongoose
+* JWT Authentication
+* bcrypt.js
+* Socket.io
+* Multer
+* Google Gemini API
+
+---
+
+## 📂 Project Structure
 
 ```
-SwipeHire/
-├── client/                      # React + Vite Frontend
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── SplashScreen.jsx     # 🎬 2-3s Opening Animation Component
-│   │   │   ├── Navbar.jsx           # Glassmorphism Navigation & Role Toggle
-│   │   │   ├── SwipeDeck.jsx        # Tinder Card Stack & Action Buttons
-│   │   │   ├── SwipeCard.jsx        # Draggable Card with Tilt & Overlays
-│   │   │   ├── MatchModal.jsx       # "It's a Match 🎉" Confetti Modal
-│   │   │   ├── AiResumeAnalyzer.jsx # AI Resume Score & Feedback Widget
-│   │   │   ├── AiCoverLetterModal.jsx# AI Cover Letter Generator
-│   │   │   ├── SkillGapModal.jsx    # Skill Gap Radar & Learning Recs
-│   │   │   ├── ChatWindow.jsx       # Real-Time Socket.io Chat Interface
-│   │   │   ├── StatCounter.jsx      # Animated Count-up Numbers
-│   │   │   └── NotificationToast.jsx# Slide-in Alert Toasts
-│   │   ├── pages/
-│   │   │   ├── StudentDashboard.jsx
-│   │   │   ├── RecruiterDashboard.jsx
-│   │   │   ├── StudentProfilePage.jsx
-│   │   │   ├── MessagesPage.jsx
-│   │   │   ├── AnalyticsPage.jsx
-│   │   │   ├── AiHubPage.jsx
-│   │   │   └── AuthPage.jsx
-│   │   ├── context/
-│   │   │   ├── AuthContext.jsx
-│   │   │   └── SocketContext.jsx
-│   │   ├── App.jsx
-│   │   └── index.css
-│   ├── package.json
-│   ├── tailwind.config.js
-│   └── vite.config.js
-├── server/                      # Node.js + Express Backend
-│   ├── config/
-│   │   └── db.js                # MongoDB Mongoose Connection
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── jobController.js
-│   │   ├── swipeController.js
-│   │   ├── aiController.js
-│   │   ├── chatController.js
-│   │   └── analyticsController.js
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── Company.js
-│   │   ├── Job.js
-│   │   ├── Swipe.js
-│   │   ├── Match.js
-│   │   ├── Chat.js
-│   │   ├── Application.js
-│   │   └── Notification.js
-│   ├── routes/
-│   │   └── api.js
-│   ├── services/
-│   │   ├── aiService.js         # Gemini API Wrapper & Fallbacks
-│   │   └── socket.js            # Socket.io Event Handlers
-│   ├── index.js
-│   ├── seed.js                  # Database Demo Seed Generator
-│   └── package.json
-├── .env.example
-├── vercel.json
-├── render.yaml
-├── package.json                 # Root script runner (concurrently)
+SwipeHire
+│
+├── client
+│   ├── components
+│   ├── pages
+│   ├── context
+│   └── services
+│
+├── server
+│   ├── controllers
+│   ├── routes
+│   ├── models
+│   ├── middleware
+│   ├── services
+│   └── config
+│
 └── README.md
 ```
 
 ---
 
-## ⚡ Quick Start & Setup Instructions
+# 🚀 Getting Started
 
-### 1. Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
+### Clone Repository
 
-### 2. Installation
-Install root, server, and client dependencies:
 ```bash
-# In the root directory:
+git clone https://github.com/your-username/swipehire.git
+cd swipehire
+```
+
+### Install Dependencies
+
+```bash
 npm run setup
 ```
 
-### 3. Environment Configuration
-Copy `.env.example` to `.env` in the `server/` directory:
+### Configure Environment Variables
+
+Create a `.env` file inside the **server** directory.
+
+```env
+MONGODB_URI=your_mongodb_uri
+
+JWT_SECRET=your_jwt_secret
+
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+### Start Development Server
+
 ```bash
-# Optional API Keys - The app includes robust fallback simulators if keys are omitted
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/swipehire
-JWT_SECRET=your_secret_jwt_key
-GEMINI_API_KEY=your_google_gemini_api_key
+npm run dev
 ```
 
 
+# 💡 Why SwipeHire?
+
+Unlike traditional job portals, SwipeHire combines:
+
+* AI-powered resume intelligence
+* Tinder-inspired swipe matching
+* Real-time recruiter communication
+* Interactive analytics
+* Modern UI/UX
+* Responsive design
+* Production-ready MERN architecture
+
 ---
 
+# 🔮 Future Improvements
 
+* Video Interview Rooms
+* AI Interview Preparation
+* Voice Messages
+* Resume Parsing using OCR
+* AI Career Roadmap
+* Company Verification
+* Multi-language Support
+* Push Notifications
+* Mobile App (React Native)
 
-## 📄 License
-MIT © 2026 SwipeHire Team. "Swipe Right on Your Dream Career."
+---
+
+# 👩‍💻 Developer
+
+**Vaishnavi Maurya**
+
+* MERN Stack Developer
+* AI Enthusiast
+* Computer Science Student
+
+If you like this project, consider giving it a ⭐ on GitHub!
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
