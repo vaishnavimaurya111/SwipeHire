@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Layers, User, Briefcase, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { getApiUrl } from '../config/api';
 
 export const AuthPage = ({ onClose }) => {
   const { login } = useAuth();
@@ -22,11 +23,12 @@ export const AuthPage = ({ onClose }) => {
 
     try {
       const endpoint = isSignUp ? '/api/auth/register' : '/api/auth/login';
-      const res = await fetch(endpoint, {
+      const res = await fetch(getApiUrl(endpoint), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, role, companyName }),
       });
+
       const data = await res.json();
       if (data.success && data.user) {
         login(data.user, data.token);
