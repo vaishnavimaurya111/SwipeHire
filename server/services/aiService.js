@@ -11,6 +11,14 @@ if (apiKey && !apiKey.startsWith('your_') && apiKey.length > 20) {
   }
 }
 
+// ─── Local keyword banks for smart fallback scoring ───────────────────────────
+const CONTACT_SIGNALS    = ['email', 'phone', 'linkedin', 'github', 'portfolio', '@', 'http', 'www'];
+const SKILLS_SIGNALS     = ['react', 'node', 'python', 'javascript', 'typescript', 'java', 'sql', 'mongodb', 'docker', 'aws', 'css', 'html', 'express', 'fastapi', 'flask', 'spring', 'kubernetes', 'graphql', 'redis', 'postgresql'];
+const PROJECT_SIGNALS    = ['project', 'built', 'developed', 'created', 'implemented', 'deployed', 'github', 'app', 'platform', 'website', 'system', 'api', 'dashboard'];
+const EXPERIENCE_SIGNALS = ['intern', 'engineer', 'developer', 'analyst', 'manager', 'worked', 'led', 'designed', 'achieved', 'increased', 'reduced', 'improved', 'responsible'];
+const EDUCATION_SIGNALS  = ['university', 'college', 'bachelor', 'master', 'b.s', 'm.s', 'b.tech', 'degree', 'gpa', 'computer science', 'engineering', 'graduate'];
+const KEYWORD_SIGNALS    = ['agile', 'scrum', 'ci/cd', 'rest', 'microservices', 'devops', 'cloud', 'machine learning', 'nlp', 'data', 'testing', 'jest', 'webpack', 'vite', 'figma'];
+
 /**
  * String hash for deterministic score variation per unique resume text.
  */
@@ -56,7 +64,6 @@ function localAnalyze(resumeText, targetRole) {
 
   // Calculate dynamic content metrics
   const wordCount = text.split(/\s+/).length;
-  const uniqueWords = new Set(text.toLowerCase().match(/[a-z0-9]+/g) || []).size;
   const hashVal = stringHash(text);
   const hashVariance = (hashVal % 7) - 3; // -3 to +3 jitter per unique text
 
@@ -150,7 +157,6 @@ function localAnalyze(resumeText, targetRole) {
   };
 }
 
-
 /**
  * Score Resume with structured 6-category rubric.
  * Uses Gemini if available, falls back to smart local analysis.
@@ -198,7 +204,6 @@ ${resumeText.substring(0, 4000)}`;
       const jsonMatch = text.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         const parsed = JSON.parse(jsonMatch[0]);
-        // Ensure overallScore is sum of parts for consistency
         parsed.overallScore = (parsed.contactScore || 0) + (parsed.skillsScore || 0) +
           (parsed.projectsScore || 0) + (parsed.experienceScore || 0) +
           (parsed.educationScore || 0) + (parsed.keywordsScore || 0);
@@ -209,7 +214,6 @@ ${resumeText.substring(0, 4000)}`;
     }
   }
 
-  // Smart variable fallback — scores differ based on actual resume content
   return localAnalyze(resumeText, targetRole);
 }
 
@@ -280,4 +284,3 @@ async function analyzeJobFit(studentSkills, jobRequirements) {
 }
 
 module.exports = { analyzeResume, generateCoverLetter, analyzeJobFit };
-
