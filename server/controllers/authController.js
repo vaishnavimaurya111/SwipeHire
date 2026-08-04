@@ -50,8 +50,9 @@ exports.register = async (req, res) => {
     try {
       const created = await User.create(newUser);
       newUser = created;
+      console.log(`✅ Saved new user to MongoDB: ${newUser.email} (${newUser._id})`);
     } catch (e) {
-      // Return generated user if MongoDB not available
+      console.warn('⚠️ Could not save user to MongoDB database:', e.message);
     }
 
     const token = generateToken(newUser._id, newUser.role);
