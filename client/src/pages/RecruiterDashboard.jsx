@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { SwipeDeck } from '../components/SwipeDeck';
 import { PlusCircle, Briefcase, Users, X, Inbox, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { getApiUrl } from '../config/api';
 
 export const RecruiterDashboard = ({ onTriggerMatch, onOpenFit, setActiveTab }) => {
   const { user, logout } = useAuth();
-
   const [recruiterTab, setRecruiterTab] = useState('swipe-candidates');
   const [showPostModal, setShowPostModal] = useState(false);
   const [activeJobs, setActiveJobs] = useState([]);
@@ -28,7 +28,7 @@ export const RecruiterDashboard = ({ onTriggerMatch, onOpenFit, setActiveTab }) 
 
     const payload = {
       title: jobTitle,
-      company: user?.companyName || '',
+      company: user?.companyName || 'Your Company',
       type: jobType,
       workplaceType,
       location,
@@ -38,7 +38,7 @@ export const RecruiterDashboard = ({ onTriggerMatch, onOpenFit, setActiveTab }) 
     };
 
     try {
-      const res = await fetch('/api/jobs', {
+      const res = await fetch(getApiUrl('/api/jobs'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

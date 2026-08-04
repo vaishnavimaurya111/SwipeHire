@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 
 const JobSchema = new mongoose.Schema(
   {
+    _id: { type: String },
     title: { type: String, required: true, trim: true },
     company: { type: String, required: true },
-    companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
+    companyId: { type: String },
     companyLogo: { type: String, default: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80' },
-    recruiter: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    recruiter: { type: String },
+
     type: { type: String, enum: ['Full-Time', 'Part-Time', 'Internship', 'Contract'], default: 'Full-Time' },
     workplaceType: { type: String, enum: ['Remote', 'Hybrid', 'On-Site'], default: 'Remote' },
     location: { type: String, default: 'Remote / San Francisco' },

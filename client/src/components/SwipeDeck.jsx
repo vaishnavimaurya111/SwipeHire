@@ -15,12 +15,13 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { getApiUrl } from '../config/api';
 
 export const SwipeDeck = ({ onTriggerMatch, onOpenFit, onOpenCoverLetter }) => {
   const { user } = useAuth();
   const [feedItems, setFeedItems] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // 0ms instant load
   const [appliedJobIds, setAppliedJobIds] = useState(new Set()); // tracks applied jobs
 
   // Filters State
@@ -37,11 +38,10 @@ export const SwipeDeck = ({ onTriggerMatch, onOpenFit, onOpenCoverLetter }) => {
   }, [user?.role]);
 
   const fetchFeed = async () => {
-    setLoading(true);
     try {
-      const res = await fetch(`/api/jobs/feed?role=${user?.role || 'student'}`);
+      const res = await fetch(getApiUrl(`/api/jobs/feed?role=${user?.role || 'student'}`));
       const data = await res.json();
-      if (data.success && data.feed) {
+      if (data.success && data.feed && data.feed.length > 0) {
         setFeedItems(data.feed);
       }
     } catch (e) {
@@ -54,7 +54,7 @@ export const SwipeDeck = ({ onTriggerMatch, onOpenFit, onOpenCoverLetter }) => {
   const fetchMyApplications = async () => {
     try {
       const token = localStorage.getItem('swipehire_token');
-      const res = await fetch('/api/my-applications', {
+      const res = await fetch(getApiUrl('/api/my-applications'), {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
       const data = await res.json();
@@ -76,7 +76,7 @@ export const SwipeDeck = ({ onTriggerMatch, onOpenFit, onOpenCoverLetter }) => {
 
     // Call API swipe endpoint
     try {
-      const res = await fetch('/api/swipes', {
+      const res = await fetch(getApiUrl('/api/swipes'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

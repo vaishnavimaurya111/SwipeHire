@@ -211,11 +211,15 @@ exports.createJob = async (req, res) => {
       companyLogo: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80',
     };
 
+    let createdJob = newJob;
     try {
-      await Job.create(newJob);
-    } catch (e) {}
+      createdJob = await Job.create(newJob);
+      console.log(`✅ Saved new job posting to MongoDB Atlas: ${createdJob.title} (${createdJob._id})`);
+    } catch (e) {
+      console.warn('⚠️ Could not save job posting to MongoDB database:', e.message);
+    }
 
-    res.status(201).json({ success: true, job: newJob });
+    res.status(201).json({ success: true, job: createdJob });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
