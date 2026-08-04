@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { SwipeDeck } from '../components/SwipeDeck';
-import { PlusCircle, Briefcase, Users, X, Inbox } from 'lucide-react';
+import { PlusCircle, Briefcase, Users, X, Inbox, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export const RecruiterDashboard = ({ onTriggerMatch, onOpenFit, setActiveTab }) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
   const [recruiterTab, setRecruiterTab] = useState('swipe-candidates');
   const [showPostModal, setShowPostModal] = useState(false);
   const [activeJobs, setActiveJobs] = useState([]);
@@ -80,6 +81,14 @@ export const RecruiterDashboard = ({ onTriggerMatch, onOpenFit, setActiveTab }) 
         </div>
 
         <div className="flex items-center gap-3">
+          <button
+            onClick={logout}
+            className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs font-bold transition shadow-md"
+          >
+            <LogOut className="w-4 h-4 text-rose-400" />
+            <span>Log Out</span>
+          </button>
+
           <button
             onClick={() => setShowPostModal(true)}
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white text-sm font-semibold shadow-lg shadow-violet-500/25 hover:scale-[1.02] transition"

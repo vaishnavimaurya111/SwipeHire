@@ -3,11 +3,12 @@ import { useAuth } from '../context/AuthContext';
 import { AiResumeAnalyzer } from '../components/AiResumeAnalyzer';
 import {
   User, Upload, Sparkles, Save, CheckCircle2,
-  MapPin, DollarSign, Globe, Github, Linkedin, Edit3, Camera
+  MapPin, DollarSign, Globe, Github, Linkedin, Edit3, Camera, LogOut
 } from 'lucide-react';
 
 export const StudentProfilePage = () => {
-  const { user, setUser, token } = useAuth();
+  const { user, setUser, token, logout } = useAuth();
+
   const [profileTab, setProfileTab] = useState('details');
   const [saving, setSaving] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
@@ -118,13 +119,23 @@ export const StudentProfilePage = () => {
               <p className="text-xs text-slate-400 mt-0.5 truncate">{user.headline || 'Add a headline...'}</p>
             </div>
 
-            {/* Resume Score */}
-            {user.resumeScore && (
-              <div className="shrink-0 text-center px-5 py-3 rounded-2xl bg-gradient-to-br from-violet-600/20 to-pink-600/20 border border-white/10">
-                <div className="text-3xl font-black text-white">{user.resumeScore}</div>
-                <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Resume Score</div>
-              </div>
-            )}
+            {/* Resume Score & Log Out Button */}
+            <div className="flex items-center gap-3 shrink-0 pt-2 sm:pt-0">
+              {user.resumeScore && (
+                <div className="text-center px-4 py-2.5 rounded-2xl bg-gradient-to-br from-violet-600/20 to-pink-600/20 border border-white/10">
+                  <div className="text-2xl font-black text-white">{user.resumeScore}</div>
+                  <div className="text-[9px] text-slate-400 font-semibold uppercase tracking-wider">Resume Score</div>
+                </div>
+              )}
+              <button
+                type="button"
+                onClick={logout}
+                className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs font-bold transition shadow-lg hover:scale-105"
+              >
+                <LogOut className="w-4 h-4 text-rose-400" />
+                <span>Log Out</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -300,13 +311,20 @@ export const StudentProfilePage = () => {
             </div>
 
             {/* Save Footer */}
-            <div className="flex items-center justify-between pt-4 border-t border-white/8">
-              {savedSuccess && (
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/8">
+              {savedSuccess ? (
                 <span className="text-sm font-semibold text-emerald-400 flex items-center gap-1.5 animate-in fade-in">
                   <CheckCircle2 className="w-4 h-4" /> Profile saved!
                 </span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={logout}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs font-bold transition"
+                >
+                  <LogOut className="w-4 h-4 text-rose-400" /> Log Out Account
+                </button>
               )}
-              {!savedSuccess && <span />}
 
               <button
                 type="submit"
